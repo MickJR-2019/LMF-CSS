@@ -1,0 +1,2062 @@
+/*  phpBB3 Style Sheet
+    --------------------------------------------------------------
+	Style name:			LMF-Grey
+	Based on style:
+	Original author:	Tom Beddard ( http://www.subblue.com/ )
+	Modified by:		phpBB Limited ( https://www.phpbb.com/ )
+	Modified by:		Mick-Cork ( Linux Mint Forum User )
+    --------------------------------------------------------------
+*/
+
+/*-----------------------------------------------------------------------------------
+
+This CSS file over-rides the rules applied by the default theme at forums.linuxmint.com.
+It can be applied via: 
+ - a browser extension, or 
+ - inclusion in its entirety in the userContent.css file in FF or Chrome, or
+ - importing it from GitHub vis the userContent.css file in FF or Chrome.
+
+Default theme rules are imported by the forum via CSS file: https://forums.linuxmint.com/styles/minty/theme/stylesheet.css?assets_version=92
+
+Files imported by the live system are:
+
+@import url("normalize.css?v=3.2");
+@import url("base.css?v=3.2");
+@import url("utilities.css?v=3.2");
+@import url("common.css?v=3.2");
+@import url("links.css?v=3.2");
+@import url("content.css?v=3.2");
+@import url("buttons.css?v=3.2");
+@import url("cp.css?v=3.2");
+@import url("forms.css?v=3.2");
+@import url("icons.css?v=3.2");
+@import url("colours.css?v=3.2");
+@import url("responsive.css?v=3.2");
+
+This theme mod changes or adds CSS rules for HTML elements already defined within the imported files,
+and adds new HTML selector rules where required.
+
+All theme mod rules have !important appended to ensure precedence over current system rules.
+
+The colours.css file has been copied in its entirety and rule changes/additions applied.
+New rules for common.css, links.css, content.css and cp.css are only present where required.
+
+TIPS
+
+*	-- SITE WIDTH --
+	The approach to site width has changed. The live system assigns a max-width of 1214px to
+	the .wrap container whereas this theme mod sets it to 100%. This change allows the wavy
+	background image in the header to cover the complete width of the browser window, and any
+	main background image to cover the window.
+	
+	The header area (headerbar), navigation (navbar), and main content area (page-body) are then 
+	pulled back in using a CSS variable (--w1).
+	 
+	This theme mod sets the max-width for those areas to 1100px (appearing smaller than the default).
+	To modify the width change the value in the 'Assign Width Variable' section below.
+
+	
+*	-- MAIN BACKGROUND IMAGE --
+ 	To REMOVE the main background image: find the 2nd occurrence of '.wrap' in this file and
+	comment out or delete the 'background-image' rule.
+
+*	To CHANGE the main background image: find the 2nd occurrence of '.wrap' in this file and
+	change the URL link to point to an appropriately sized image of your choice.
+
+
+*	-- HIDDEN ELEMENTS --
+	This theme mod attempts to minimise and declutter parts of the content and layout. This
+	includes hiding some normally displayed areas. The site description in the header area
+	is hidden as it conflicts with elements introduced here. 
+	
+	The advertisements section, user avatars, rules block and signatures are also hidden but these 
+	can easily be re-introduced by removing or commenting out the relevent rules, or by changing the 
+	rule to 'display: visible;' in the 'Hide Selected Elements' section below.
+
+
+*	-- COLOUR MANAGEMENT --
+	The approach to colour management has changed. The live system applies hex codes to each and every
+	colour rule whereas this file uses CSS variables. The variables are referenced using, for example, 
+	the syntax 'color: var(--b1)'. This would apply a dark grey colour to the referenced HTML element.
+	
+	To modify the colour of 'b1' wherever it is used, change the associated colour hex code in the
+	'Assign Colour Variables' section below.
+	
+	Note: If you change dark backgrounds to a light colour you would also need to darken the text 
+	in those areas to maintain contrast. It's probably a bit of trial and error if you deviate too far away
+	from the light and dark scheme used here, but anything is feasible with a bit of time.
+
+
+*	-- SITE LOGO --
+	The new LM logo is pulled in from the main LM web server at linuxmint.com. Two versions are available;
+	A mono (white) version or a colour (green) version. The logo is selected using the '.site_logo' CSS rule.
+	For ease of use both are referenced in the rule (background-image), with the unused one commented out.
+	
+	
+*	-- TRANSPARENT (WAVY) HEADER BACKGROUND IMAGE --
+	The transparent header image is pulled in from the main LM web server at linuxmint.com. The image is 
+	selected using the '#page-header' background-image rule. Delete or comment out this rule if image not req'd.
+
+
+*	-- PADDING, MARGINS & FONT SIZES --
+	Changes to these areas are generally intended to introduce space and increase text sizes. Padding, and
+	bottom or top margin changes in particular, are more generous in their use of screen estate. If you have 
+	a small or low resolution screen you might prefer to reduce those back.
+ 
+-----------------------------------------------------------------------------------*/
+
+
+/* 	Hide Selected Elements */
+
+.site-description h1 {display: none !important;} 	/* Header: 'Linux Mint forums' */
+.site-description p {display: none !important;} 	/* Header: 'Welcome to the Linux Mint Forums!' */
+.phpbb-ads-center {display: none !important;} 		/* Ad section in header area */
+.avatar-container {display: none !important;} 		/* User avatars beside posts */
+.rules {display: none !important;} 					/* Rules advice above forums & posts */ 
+.asignature {display: none !important;} 				/* User signature below posts. */
+
+
+/* 	Assign Colour Variables */
+
+:root {
+
+/* BROWSER WINDOW BACKGROUND */
+	--bg: 		#343a40; 	/* Visible if no background image applied: Darkest Grey */
+	
+/* BORDERS & BACKGROUNDS */
+	--cb: 		#474f58; 	/* Border: Forums, Posts, Dropdowns (Quick Links, Notifications, Jump To), Control Panel: Dark Grey */
+	--cbg1: 	#343a40; 	/* Dropdowns (Quick Links, Notifications, Jump To): Very Dark Grey */
+	--bg1:		#dcdcdc; 	/* Alternating background : Forums, Posts etc: Light Grey */
+	--bg2:		#ebebeb; 	/* Alternating background : Forums, Posts etc: Very Light Grey */
+	--sbg1:		#cbcbcb; 	/* Alternating background : Post signatures: Mid Grey */
+	--sbg2:		#dcdcdc; 	/* Alternating background : Post signatures: Light Grey */
+	--qbg1:		#B7CCA1; 	/* Alternating background : Post blockquotes: Light Green */
+	--qbg2:		#dcdcdc; 	/* Alternating background : Post blockquotes: Light Grey */
+	--ubg1:		#b7cca1; 	/* Username background gradient to transparent : Posts: Light Green */
+
+/* TEXT */
+	--dt: 		#ebebeb; 	/* Default: Very Light Grey */
+	--ct: 		#343a40; 	/* Content Areas: Very Dark Grey */
+	--wt: 		#dcdcdc; 	/* Header Welcome Message: Light Grey */
+	--st1:		#cbcbcb; 	/* Section Main Title: Mid Grey */
+	--st2:		#ebebeb; 	/* Section Column Titles (e,g. TOPICS, POSTS, LAST POST): Very Light Grey */
+	
+/* LINKS */
+	--cl:		#3e6a2a; 	/* Default: Dark Green */
+	--cl-h:		#000000; 	/* Default:hover: Black */
+	--hfl: 		#dcdcdc; 	/* Header & Footer: Light Grey */
+	--hfl-h: 	#9fd088; 	/* Header & Footer:hover: Mid Green */
+	--dl1: 		#ebebeb; 	/* Quick Links, Notifications, Jump To: Very Light Grey */
+	--dl1-h: 	#9fd088; 	/* Quick Links, Notifications, Jump To:hover: Mid Green */
+	--fl1:		#9fd088;	/* Forums & Posts Title Links: Mid Green */
+	--fl1-h:	#ebebeb;	/* Forums & Posts Title Links:hover: Very Light Grey */
+
+/* HIGHLIGHT COLOURS */
+	--fr:		#ba5300; 	/* Forum Mod/Admin Username Colour (Links or Text) - Orange */
+
+	
+/* Content Areas Background & Border Colours */
+	--bw: #ffffff; /* White */
+	--bb: #000000; /* Black */
+	--b1: #343a40; /* Very Dark Grey */
+	--b2: #474f58; /* Dark Grey */
+	--b3: #cbcbcb; /* Mid Grey */
+	--b4: #dcdcdc; /* Light Grey */
+	--b5: #ebebeb; /* Very Light Grey */
+	--b6: #365c24; /* Dark Green */
+	--b7: #9fd088; /* Mid Green */
+	--b8: #B7CCA1; /* Light Green */
+	
+/* Content Text Colours */
+	--tw: #ffffff; /* White */
+	--tb: #000000; /* Black */
+	--t1: #343a40; /* Very Dark Grey */
+	--t2: #474f58; /* Dark Grey */
+	--t3: #cbcbcb; /* Mid Grey */
+	--t4: #dcdcdc; /* Light Grey */
+	--t5: #ebebeb; /* Very Light Grey */
+	--t6: #365c24; /* Dark Green */
+	--t7: #9fd088; /* Mid Green */
+	--t8: #B7CCA1; /* Light Green */
+
+/* Form Field Text Colours */
+	--ff1: #343a40; /* Darkest Grey */
+
+/* Form Field Background Colours */
+	--ffb1: #ebebeb; /* Lightest Grey */
+	--ffb1: #fbf804; /* Yellow Test */
+	--ffb1: #B7CCA1; /* Green Test */
+
+/* Highlight Colours */
+	--h1: #ba5300; /* Orange:		Forum Moderator Name & Reported Messages Indicator */
+	--h2: #ff0000; /* Red:			Profile Warnings. Message From Foe Indicator */
+	--h3: #ffff00; /* Yellow:		Marked Message Indicator */
+	--h4: #BC2A4D; /* Dark Pink:	Error Messages */
+	--h5: #4372AA; /* Denim Blue	 */
+}			
+
+/* Dark Theme Option - Remove comment delimeters to make active */
+
+/*:root {
+	--b2: #343a40; /* Darker Grey
+	--b3: #565f6a; /* Dark Grey
+	--b4: #2f343a; /* Darkest Grey
+	--b5: #33383e; /* Dark Grey
+	--t1: #cbcbcb; /* Light Grey
+	--t2: #cbcbcb; /* Lighter Grey
+	--t6: #B7CCA1; /* Light Green
+} */
+
+
+/* 	Assign Width Variable */
+
+:root {
+	--w1: 1100px;
+}
+
+
+/*
+--------------------------------------------------------------
+Rule changes to common.css
+-------------------------------------------------------------- */
+
+body {
+	padding-top: 0px !important;
+}
+
+.forabg,
+.forumbg {
+	font-size: 1.1em !important;
+}
+
+h1 {
+	margin-bottom: 6px !important;
+}
+
+h2 {
+	margin-bottom: 6px !important;
+}
+
+
+h3 {
+	border: 0px !important;
+	margin-bottom: 6px !important;
+}
+
+.wrap {
+	border: 0 !important;
+	max-width: 100% !important;
+	padding: 0px !important;
+	background-repeat: no-repeat !important;
+    background-size: 100% auto !important;
+    background-position: center top !important;
+    background-attachment: fixed !important;
+}
+
+#page-header {  /* New Selector */
+	padding-bottom: 20px !important;
+	margin-bottom: 30px !important;
+	background-position: center center !important;
+	background-repeat: no-repeat !important;
+	-webkit-background-size: cover !important;
+		background-size: cover !important;
+}
+
+#page-header .navbar::before { /* New selector */
+	display: block !important;
+	margin-bottom: 5px !important;
+	font-weight: normal !important;
+	font-size: 1.1em !important;
+	content: "Welcome to our forums!" !important;
+}
+
+.page-body {
+	max-width: var(--w1) !important;
+	margin: auto !important;
+}
+
+.headerbar {
+	max-width: var(--w1) !important;
+	margin: auto !important;
+}
+
+.navbar {
+	max-width: var(--w1) !important;
+	margin: auto !important;
+}
+
+.forabg {
+	margin-bottom: 15px !important;
+	padding: 7px !important;
+	/* border: 1px solid transparent !important; */
+}
+
+.forumbg {
+	margin-bottom: 15px !important;
+	padding: 7px !important;
+	/* border: 1px solid transparent !important; */
+}
+
+.panel {
+	margin-bottom: 15px !important;
+	padding: 7px !important;
+	border: 7px solid transparent !important;
+}
+
+.panel .inner { /* New selector */
+	padding: 20px !important;
+}
+
+.post {
+	border-style: solid !important;
+	border-width: 7px!important;
+	margin-bottom: 15px !important;
+}
+
+.post .bg2 .inner { /* New selector */
+	border-radius: 5px !important;
+}
+
+.cp-main .panel {
+	padding: 0px !important;
+	border: 0px !important;
+}
+
+ul.navlinks {
+	border-top: 0px !important;
+}
+
+.action-bar {
+	margin: 10px 0 !important;
+}
+
+.copyright {
+	margin-top: 20px !important;
+}
+
+.headerspace {
+	margin-top: 20px !important;
+	margin-bottom: 15px !important;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+	border-radius: 7px !important;
+	border-style: solid !important;
+	border-width: 7px !important;
+}
+
+div.rules {
+	margin: 20px 0 !important;
+	padding: 10px !important;
+}
+
+.stat-block { /* New selector */
+	border-style: solid !important;
+	border-width: 7px !important;
+	border-radius: 7px !important;
+	margin-bottom: 15px !important;
+	padding-left: 20px !important;
+	padding-right: 20px !important;
+}
+
+.dropdown-extended .header {
+    text-shadow: none !important;
+    border: 0px !important;
+}
+
+.attachbox {
+	text-align: center !important;
+}
+
+.attachbox img {
+	border: 7px solid !important;
+	border-radius: 7px !important;
+}
+
+.dropdown-contents li a:hover { /* New selector */
+	text-decoration: none !important;
+}
+
+.dropdown .dropdown-contents {
+	padding: 5px 0 5px 0 !important;
+}
+
+/*
+--------------------------------------------------------------
+Rule changes to links.css
+-------------------------------------------------------------- */
+.postprofile .avatar img {
+    display: block;
+    height: 70px !important;
+    width: auto !important;
+}
+
+.postlink {
+	border: none !important;
+    text-decoration: underline !important;
+    text-underline-offset: 0.3em !important;
+}
+
+.postlink:hover {
+    text-decoration: none !important;
+}
+
+.postbody .content img.postimage, .postbody .content a img {
+	margin: 10px auto !important;
+	border: 7px solid #ffffff !important;
+	border-radius: 5px !important;
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+.postbody .content img.postimage[src$="gif"] { /* New selector */
+	margin: 0px !important;
+	border: none !important;
+	-webkit-box-shadow: none !important;
+	   -moz-box-shadow: none !important;
+	        box-shadow: none !important;
+}
+	
+.postprofile a.username { /* New selector */
+	font-size: 1.2em !important; 
+	margin-bottom: 5px !important;
+	display: inline-block !important;
+	padding: 5px 0px 5px 5px !important;
+	border-radius: 3px !important;
+	width: 90% !important;
+}
+	
+.postprofile a.username-coloured { /* New selector */
+	font-size: 1.2em !important;
+	margin-bottom: 5px !important;
+	display: inline-block !important;
+	padding: 5px 0px 5px 5px !important;
+	border-radius: 3px !important;
+	width: 90% !important;
+}
+
+.postprofile a.username-coloured::after { /* New selector */
+	display: block !important;
+	margin-top: 5px !important;
+	font-weight: normal !important;
+	content: "Forum Rep" !important;
+}
+
+.forumbg .header a, .forabg .header a, th a {
+	font-size: 14px !important;
+}
+
+
+/*
+--------------------------------------------------------------
+Rule changes to content.css
+-------------------------------------------------------------- */
+
+ul.topiclist li {
+	padding-top: 2px !important;
+	padding-bottom: 2px !important;
+}
+
+li.row {
+	border-radius: 4px !important;
+	border-top: 0px !important;
+	border-bottom: 2px solid transparent !important;
+}
+
+.postbody .content {
+	padding: 10px 20px 20px 20px !important;
+	margin: 10px 0 !important;
+}
+
+.panel h3 {
+	font-size: 1.2em !important;
+}
+
+.post.bg1 .inner, /* New selector */
+.post.bg2 .inner { /* New selector */
+	padding: 15px !important;
+}
+
+.signature {
+	font-style: italic !important;
+	margin: 30px auto 0px auto !important;
+	padding: 12px !important;
+	width: 95% !important;	
+	border-radius: 7px !important;
+	border: none !important;
+}
+
+.notice {
+	padding: 12px !important;
+	border: 0px !important;
+	border-radius: 5px !important;
+	width: 95% !important;
+	margin: 15px auto !important;
+}
+
+blockquote {
+	width: 95% !important;
+	border-radius: 5px !important;
+	margin: 10px auto 20px auto !important;
+	padding: 8px !important;		
+}
+
+.codebox {
+	width: 95% !important;
+	border-radius: 5px !important;
+	margin: 10px auto 20px auto !important;
+	padding: 8px !important;
+}
+
+.pollbar1, .pollbar2, .pollbar3, .pollbar4, .pollbar5 {
+	border: none !important;
+}
+
+.postprofile {
+	border: 0px !important;
+	border-radius: 7px !important;
+	padding: 10px 0 10px 0 !important;
+}
+
+.postprofile dd, .postprofile dt {
+	line-height: 1.7em !important;
+	margin-left: 10px !important;
+}
+
+fieldset.quick-login {
+	margin-bottom: 15px !important; 
+}
+
+.message-box textarea {
+	min-width: 95% !important;
+	padding: 10px !important;
+	border-radius: 5px !important;
+}
+
+a.button1, input.button1, input.button3, a.button2, input.button2 {
+	font-size: 1.2em !important;
+	padding: 3px 6px !important;
+	border-radius: 5px !important;
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+}
+
+.button {
+	padding: 2px 4px !important;
+}
+
+.search-header .inputbox { 
+	border: 0!important; 
+	padding: 2px !important;
+}
+
+.navigation .active-subsection a {
+	font-weight: bold !important;
+}
+
+.dropdown-extended .header, .dropdown-extended .footer {
+	font-size: 1.2em !important;
+}
+
+
+/*
+--------------------------------------------------------------
+Rule changes to cp.css
+-------------------------------------------------------------- */
+
+.navigation li {
+	font-weight: normal !important;
+}
+
+.navigation a {
+	font-size: 1.2em !important;
+}
+
+.navigation .active-subsection a {
+	font-weight: bold !important;
+}
+
+.cp-main h2 {
+	font-weight: bold !important;
+}
+
+fieldset.fields1 dl.pmlist dt textarea {
+	margin-top: 10px !important;
+}
+
+fieldset.fields1 dl.pmlist > dt {
+    margin-bottom: 10px !important;
+}
+
+fieldset.fields1 dd.recipients {
+	margin-top: 25px !important;
+}
+
+/*
+--------------------------------------------------------------
+Rule changes to colours.css
+-------------------------------------------------------------- */
+
+html, body {
+	color: var(--dt) !important;
+	background-color: var(--bg) !important;
+}
+
+#page-header {  /* New Selector */
+	/* Import pattern image from main LM website to forum header area */
+	background-image: url(https://linuxmint.com/web/wizixo/template/assets/images/bg/pattern/02.png) !important;
+}
+
+h1 {
+	color: var(--t4) !important;
+}
+
+h2 {
+	color: var(--t2) !important;
+}
+
+h3 {
+	border-bottom-color: transparent !important; /* Rule redundant as h3 border redefined as 0px earlier */
+	color: var(--t2) !important;
+}
+
+hr {
+	display: none !important;
+}
+
+/* ---Colours and backgrounds for links.css --- */
+a {
+	color: var(--cl) !important;
+}
+
+a:hover {
+	color: var(--cl-h) !important;
+}
+
+h2 a { /* New selector */
+	/* color: var(--t7) !important; */
+	color: var(--fl1) !important;
+}
+
+h2 a:hover { /* New selector */
+	color: var(--fl1-h) !important;
+}
+
+.headerspace h3 a { /* New selector */
+	color: var(--t6) !important;
+}
+
+.forumbg .header a, .forabg .header a, th a {
+	color: var(--fl1) !important;
+}
+
+.forumbg .header a:hover, .forabg .header a:hover, th a:hover {
+	color: var(--fl1-h) !important;
+}
+
+/* --- Notification mark read link --- */
+.dropdown-extended a.mark_read,
+.dropdown-extended a.mark_read:hover { /* New selector */
+	background-color: transparent !important;
+}
+
+.dropdown-extended a.mark_read:hover { /* New selector */
+	background-color: transparent !important;
+}
+
+#page-footer a { /* New selector */
+	color: var(--hfl) !important;
+}
+
+#page-footer a:hover { /* New selector */
+	color: var(--hfl-h) !important;
+}
+
+a.mark-read { /* New selector */
+	color: var(--hfl) !important;
+}
+	
+a.mark-read:hover { /* New selector */
+	color: var(--hfl-h) !important;
+}
+
+/* --- Post body links --- */
+.postlink {
+    color: var(--t6) !important;
+}
+
+.postlink:visited {
+	color: var(--t1) !important;
+}
+
+.postlink:hover {
+	background: none !important;
+	color: blue !important;
+	font-weight: bold !important;
+}
+
+.postprofile a.username-coloured, /* New selector */
+.postprofile a.username { /* New selector */
+	background-image: linear-gradient(to right, var(--ubg1) , transparent) !important;
+}
+
+a.username-coloured {/* New selector */
+	color: var(--fr) !important;
+}
+
+span.username-coloured {/* New selector */
+	color: var(--fr) !important;
+}
+
+.postprofile a.username-coloured::after { /* New selector */
+	color: var(--t6) !important;
+}
+
+.signature a, .signature a:hover {
+	background-color: transparent !important;
+}
+
+/* --- Back to top of page --- */
+.top i {
+	color: var(--t6) !important;
+}
+
+#postform a.top { /* New selector */
+	color: var(--t7) !important;
+}
+
+#postform a.top:hover { /* New selector */
+	color: var(--t8) !important;
+}
+
+#postform .top i { /* New selector */
+    color: var(--t5) !important;
+}
+
+/* --- Arrow links --- */
+.arrow-left, .arrow-right { /* New selector */
+	color: var(--t7) !important;
+}
+
+.arrow-left span {/* New selector */
+	color: var(--t7) !important;
+}
+
+.arrow-left:hover, .arrow-right:hover {
+	color: var(--t8) !important;
+}
+
+/* --- Round cornered boxes and backgrounds --- */
+.wrap {
+	background-color: transparent !important;
+	acolor: var(--t4) !important;
+	background-image: url("https://i.imgur.com/EbDWKye.jpg") !important;
+}
+
+.site_logo {
+	/* Import logo image from main LM website to forum header area. Choice of green or mono */
+	/* background-image: url("https://linuxmint.com/web/img/logo-mono.svg") !important; */
+	background-image: url("https://linuxmint.com/web/img/logo.svg") !important;
+	width: 200px !important;
+	height: 60px !important;
+	background-size: 200px 60px !important;
+}
+
+.headerbar {
+	color: var(--dt) !important;
+}
+
+.headerbar {
+	background-color: transparent !important;
+	background-image: none !important;
+}
+
+.forabg, .forumbg {
+	background-color: var(--cb) !important;
+	background-image: none !important;
+}
+
+#page-header .navbar::before { /* New selector */
+	color: var(--wt) !important;
+}
+
+.navbar {
+	background-color: transparent !important;
+}
+
+.navbar a { 
+	color: var(--hfl) !important;
+}
+
+.navbar a:hover {
+	color: var(--hfl-h) !important; 
+}
+
+.panel {
+	background-color: var(--b5) !important;
+	color: var(--ct) !important;
+	border-color: var(--cb) !important;
+}
+
+.post:target .content {
+	color: var(--ct) !important;
+}
+
+.post:target h3 a { /* Rule redundant */
+	/* color: #000000; */
+}
+
+.post { /* New selector */
+	border-color: var(--cb) !important;
+}
+
+.bg1 {
+	background-color: var(--bg1) !important;
+}
+
+table.zebra-list tr:nth-child(odd) td, ul.zebra-list li:nth-child(odd) {
+	background-color: var(--b4) !important;
+}
+
+.bg2 {
+	background-color: var(--bg2) !important;
+}
+
+table.zebra-list tr:nth-child(even) td, ul.zebra-list li:nth-child(even) {
+	background-color: var(--b5) !important;
+}
+
+:not(.row .big-column).bg3	{
+	background-color: var(--b4) !important;
+}
+
+.row.bg3:nth-child(odd), .big-column.bg3:nth-child(odd) {
+	background-color: var(--b8) !important;
+}
+
+.ucprowbg {
+	background-color: var(--t4) !important;
+}
+
+.fieldsbg {
+	background-color: var(--t5) !important;
+}
+
+.stat-block { /* New selector */
+	color: var(--ct) !important;
+	background-color: var(--b3) !important;
+	border-color: var(--b2) !important;
+}
+
+.headerspace { /* New selector */
+	background-color: var(--b3) !important;
+	border-color: var(--b2) !important;
+}
+
+/* --- Horizontal lists ---*/
+ul.navlinks {
+	border-top-color: transparent !important; /* Note: rule redundant. Border set to 0px earlier */
+}
+
+/* --- Table styles ---*/
+table.table1 thead th {
+	color: var(--tw) !important;
+}
+
+table.table1 tbody tr {
+	border-color: var(--b2) !important;
+}
+
+table.table1 tbody tr:hover, table.table1 tbody tr.hover {
+	background-color: var(--bw) !important;
+	color: var(--ct) !important;
+}
+
+table.table1 td {
+	color: var(--ct) !important;
+}
+
+table.table1 tbody td {
+	border-top-color: var(--b2) !important;
+}
+
+table.table1 tbody th { /* Note: selector appears not to be used in current HTML */
+	border-bottom-color: var(--b2) !important;
+	color: var(--ct) !important;
+	background-color: var(--b2) !important;
+}
+
+table.info tbody th {
+	color: var(--ct) !important;
+}
+
+/* --- Misc layout styles --- */
+dl.details dt {
+	color: var(--ct) !important;
+}
+
+dl.details dd {
+	color: var(--ct) !important;
+}
+
+.sep {
+	color: var(--h5) !important;
+}
+
+p.time { /* New selector */
+	/* color: var(--hft) !important; */
+}
+
+h2.titlespace { /* New selector */
+	color: var(--dt) !important;
+}
+
+h2.group-title { /* New selector */
+	color: var(--dt) !important;
+}
+
+h2.memberlist-title {/* New selector */
+	color: var(--dt) !important;
+}
+
+.page-body > h2.faq-title { /* New selector */
+	color: var(--dt) !important;
+} 
+
+h3.review { /* New selector */
+	color: var(--t5) !important;
+}
+
+.panel h3 {
+	color: var(--t6) !important;
+}
+
+#page-footer { /* New selector */
+	/* color: var(--hft) !important; */
+}
+
+div.rules a { /* New selector */
+	color: var(--t7) !important;
+}
+
+.right-box a { /* New selector */
+	color: var(--t7) !important;
+}
+
+.right-box a:hover { /* New selector */
+	color: var(--tw) !important;
+}
+
+#page-footer .copyright a { /* New selector */
+	color: var(--hfl) !important;
+}
+
+#page-footer .copyright a:hover { /* New selector */
+	color: var(--hfl-h) !important;
+}
+
+.footer-link-text { /* New selector */
+	color: var(--hfl) !important;
+}
+
+.footer-link-text:hover { /* New selector */
+	color: var(--hfl-h) !important;
+}
+
+/* --- Icon styles --- */
+i.icon-blue.fa-question::before, i.icon-red.fa-question::before {
+	content: "\f059"; /* fa-question-circle */
+}
+
+i.icon-red.fa-exclamation::before {
+	content: "\f06a"; /* fa-exclamation-circle */
+}
+
+button>i.fa-tint::before {
+	content: "\f1fc"; /* fa-paint-brush */
+}
+
+.icon.icon-blue, a:hover .icon.icon-blue {
+	color: var(--h5) !important;
+}
+
+.icon.icon-green, a:hover .icon.icon-green{
+	color: var(--t7) !important;
+}
+
+.icon.icon-red, a:hover .icon.icon-red{
+	color: var(--h2) !important;
+}
+
+.icon.icon-orange, a:hover .icon.icon-orange{
+	color: var(--h1) !important;
+}
+
+.icon.icon-bluegray, a:hover .icon.icon-bluegray{
+	color: var(--b1) !important;
+}
+
+.icon.icon-gray, a:hover .icon.icon-gray{
+	color: var(--b2) !important;
+}
+
+.icon.icon-lightgray, a:hover .icon.icon-lightgray{
+	color: var(--b3) !important;
+}
+
+.icon.icon-black, a:hover .icon.icon-black{
+	color: var(--t5) !important;
+}
+
+.alert_close .icon:before {
+	background-color: var(--bw) !important;
+}
+
+.icon.icon-xl { /* New selector */ 
+    background-color: var(--bw) !important;
+}
+
+/* Jumpbox */
+.jumpbox .dropdown li {
+	border-top-color: var(--b8) !important;
+}
+
+.jumpbox-cat-link {
+	background-color: var(--b6) !important;
+	border-top-color: var(--b6) !important;
+}
+
+.jumpbox-cat-link:hover {
+	background-color: var(--b2) !important;
+	border-top-color: var(--b6) !important;
+}
+
+a.jumpbox-cat-link:hover { /* New selector */
+	color: var(--t1) !important;
+}
+
+.jumpbox-forum-link {
+	background-color: var(--b1) !important;
+}
+
+.jumpbox-forum-link:hover {
+	background-color: var(--b2) !important;
+}
+
+a.jumpbox-forum-link:hover { /* New selector */
+	color: var(--t1) !important;
+}
+
+.jumpbox .dropdown .pointer-inner {
+	border-color: var(--b5) transparent !important;
+}
+
+.jumpbox-sub-link {
+	background-color: var(--b1) !important;
+}
+
+.jumpbox-sub-link:hover {
+	background-color: var(--b2) !important;
+}
+
+a.jumpbox-sub-link:hover { /* New selector */
+	color: var(--tb) !important;
+}
+
+.jumpbox-return a { /* New selector */
+	color: var(--t3) !important;
+}
+
+.jumpbox-return a:hover { /* New selector */
+	color: var(--t8) !important;
+}
+
+/* --- Miscellaneous styles --- */
+.copyright {
+	color: var(--t3) !important;
+}
+
+.error {
+	color: var(--h4) !important;
+}
+
+li.reported:hover {
+	background-color: var(--b8) !important;
+}
+.sticky, .announce {
+	/* you can add a background for stickies and announcements*/
+}
+
+div.rules {
+	background-color: var(--b2) !important;
+	color: var(--t4) !important;
+	border: 1px solid var(--bb) !important;
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+	   -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+	        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+}
+
+p.post-notice {
+	background-color: var(--b8) !important;
+	background-image: none !important;
+}
+
+h2.solo { /* New selector */
+	color: var(--t3) !important;
+}
+
+/* --- Colours and backgrounds for content.css --- */
+ul.forums > li.row { /* New selector */
+	/* forum rows */
+	background-color: var(--b5) !important;
+}
+
+ul.forums > li.row:hover { /* New selector */
+	background-color: var(--b5) !important;
+	background-image: none !important;
+}
+
+ul.forums > li.row:first-child {
+	background-color: var(--b4) !important; /* Old browsers */ /* FF3.6+ */
+		background-image: -webkit-linear-gradient(top, var(--b3) 0%, var(--b5) 90%) !important;
+		background-image: linear-gradient(to bottom, var(--b3) 0%, var(--b5) 90%)!important;
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--b3)', endColorstr='var(--b5)',GradientType=0 ); /* IE6-9 */
+}
+
+ul.forums > li.row:first-child:hover {
+	background-color: var(--b5) !important; /* Rule redundant */
+	background-image: none !important;
+}
+
+ul.forums {
+	background-color: transparent !important; /* Rule redundant; */
+}
+
+ul.topiclist li {
+	color: var(--ct) !important;
+}
+
+ul.topiclist dd {
+	border-left-color: transparent !important;
+}
+
+ul.topiclist dd:last-child { /* New selector */
+	border-left-color: var(--b3) !important;
+}
+
+.rtl ul.topiclist dd {
+	border-right-color: transparent !important;
+	border-left-color: transparent !important;
+}
+
+li.row {
+	border-bottom-color: var(--b3) !important;
+}
+
+li.row strong {
+	color: var(--tb) !important;
+}
+
+li.row:hover {
+	background-color: var(--b5) !important;
+}
+
+li.row:hover dd {
+	border-left-color: transparent !important;
+}
+
+.rtl li.row:hover dd {
+	border-right-color: transparent !important;
+	border-left-color: transparent !important;
+}
+
+li.header dt, li.header dd {
+	color: var(--st2) !important;
+}
+
+/* --- Post body styles ---*/
+.postbody {
+	color: var(--t2) !important;
+}
+
+/* --- Content container styles ---*/
+.content {
+	color: var(--ct) !important;
+}
+
+.content h2, .panel h2 {
+	color: var(--t6) !important;
+	border-bottom-color: var(--b6) !important;
+}
+
+dl.faq dt {
+	color: var(--tb) !important;
+}
+
+.posthilit {
+	background-color: var(--b7) !important;
+	color: var(--ct) !important;
+}
+
+.announce, .unreadpost {
+	/* Highlight the announcements & unread posts box */
+}
+
+/* --- Post signature --- */
+.signature {
+	color: var(--t2) !important;
+}
+
+.bg1 .signature { /* New selector */
+	background-color: var(--sbg1) !important;
+}
+	
+.bg2 .signature { /* New selector */
+	background-color: var(--sbg2) !important;
+}
+
+/* --- Post notices --- */
+.notice {
+	border-top-color: transparent; /* Rule redundant as borders previously set to '0' */
+	background-image: linear-gradient(to right, var(--b8) , transparent) !important;
+	color: var(--t2) !important;
+}
+
+/* --- Quote block --- */
+blockquote {
+	background-color: var(--qbg1) !important;
+	border: 1px solid var(--b2) !important;
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+blockquote blockquote { /* Nested quotes */
+	background-color: var(--qbg2) !important;
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important; /* New rule */
+	   -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important; /* New rule */
+	        box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important; /* New rule */
+}
+
+blockquote blockquote blockquote { /* Nested quotes */
+	background-color: var(--qbg1) !important;
+	-webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important; /* New rule */
+	   -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important; /* New rule */
+	        box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important; /* New rule */
+}
+
+blockquote blockquote blockquote blockquote { /* Nested quotes : New selector */
+	background-color: var(--qbg2) !important;
+	-webkit-box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 2px 8px rgba(0,0,0,0.3) !important;
+}
+
+/* --- Code block --- */
+.codebox {
+	background-color: var(--bw) !important;
+	border-color: var(--b2) !important;
+}
+
+.codebox p {
+	border-bottom-color: var(--b3) !important;
+}
+
+.codebox code {
+	color: var(--t6) !important;
+}
+
+/* --- Attachments ---*/
+.attachbox {
+	background-color: transparent !important;
+	border-color:  transparent !important;
+}
+
+.pm-message .attachbox {
+	background-color: var(--b5) !important;
+}
+
+.attachbox dd {
+	border-top-color: transparent !important;
+}
+
+.attachbox p {
+	color: var(--ct) !important;
+}
+
+.attachbox p.stats {
+	color: var(--ct) !important;
+}
+
+.attach-image img {
+	border-color: var(--bw) !important;
+}
+
+/* --- Inline image thumbnails --- */
+.attachbox img {
+	border-color: #ffffff !important;
+}
+
+dl.file dd {
+	color: var(--ct) !important;
+}
+
+dl.thumbnail img {
+	border-color: transparent !important;
+	background-color: var(--bw) !important;
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+dl.thumbnail dd {
+	color: var(--ct) !important;
+}
+
+dl.thumbnail dt a:hover {
+	background-color: transparent !important;
+}
+
+dl.thumbnail dt a:hover img {
+	border-color: var(--bw) !important;
+}
+
+/* --- Post poll styles ---*/
+/* Note: border-color rules could be deleted here as pollbar border set to 'none' earlier */
+
+fieldset.polls dl {
+	border-top-color: var(--b2) !important;
+	color: var(--ct) !important;
+}
+
+fieldset.polls dl.voted {
+	color: color: var(--h5) !important;
+}
+
+fieldset.polls dd div {
+	color: var(--tw) !important;
+}
+
+.rtl .pollbar1, .rtl .pollbar2, .rtl .pollbar3, .rtl .pollbar4, .rtl .pollbar5 {
+	border-right-color: transparent !important;
+}
+
+.pollbar1 {
+	background-color: var(--b7) !important;
+	border-bottom-color: transparent !important;
+	border-right-color: transparent !important;
+}
+
+.rtl .pollbar1 {
+	border-left-color: transparent !important;
+}
+
+.pollbar2 {
+	background-color: var(--b6) !important;
+	border-bottom-color: transparent !important;
+	border-right-color: transparent !important;
+}
+
+.rtl .pollbar2 {
+	border-left-color: transparent !important;
+}
+
+.pollbar3 {
+	background-color: var(--b7) !important;
+	border-bottom-color: transparent !important;
+	border-right-color: transparent !important;
+}
+
+.rtl .pollbar3 {
+	border-left-color: transparent !important;
+}
+
+.pollbar4 {
+	background-color: var(--b6) !important;
+	border-bottom-color: transparent !important;
+	border-right-color: transparent !important;
+}
+
+.rtl .pollbar4 {
+	border-left-color: transparent !important;
+}
+
+.pollbar5 {
+	background-color: background-color: var(--b7) !important;
+	border-bottom-color: transparent !important;
+	border-right-color: transparent !important;
+}
+
+.rtl .pollbar5 {
+	border-left-color: transparent !important;
+}
+
+/* --- Poster profile block ---*/
+.postprofile {
+	color: var(--b1) !important;
+	border-color: transparent !important; /* Rule redundant. postprofile border set to 0px */
+}
+
+.bg1 .postprofile { /* New selector */
+	color: var(--ct) !important;
+	background-color: var(--b3) !important;
+}
+	
+.bg2 .postprofile { /* New selector */
+	color: var(--ct) !important;
+	background-color: var(--b4) !important;
+}
+
+.pm .postprofile {
+	border-color: transparent !important; /* Rule redundant - .postprofile border set to 0px */
+}
+
+.postprofile strong {
+	color: var(--tb) !important;
+}
+
+.online {
+	background-image: url("./en/icon_user_online.gif");
+}
+
+dd.profile-warnings {
+	color: var(--h2) !important;
+}
+
+/* --- Colours and backgrounds for buttons.css --- */
+.button {
+	border-color: var(--b6) !important;
+	background-color: var(--bw) !important;
+	background-image: none !important;
+	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+	color: var(--t6) !important;
+}
+
+.button:hover,
+.button:focus {
+	border-color: var(--b6) !important;
+	background-color: var(--b8) !important;
+	background-image: none !important;
+	text-shadow: none !important;
+	color: var(--tb) !important;
+}
+
+
+.button .icon,
+.button-secondary {
+	color: var(--t6) !important;
+}
+
+.button-secondary:focus,
+.button-secondary:hover,
+.button:focus .icon,
+.button:hover .icon {
+	color: var(--tb) !important;
+}
+
+.button-search:hover,
+.button-search-end:hover {
+	border-color: var(--bb) !important;
+}
+
+.caret	{ border-color: var(--bb) !important;}
+
+.contact-icons a {
+	border-color: var(--b5) !important;
+}
+
+.contact-icons a:hover	{
+	background-color: var(--b5) !important;
+}
+
+/* --- Pagination --- */
+
+.pagination { /* New selector */
+	color: var(--t4) !important;
+}
+
+.pagination a { /* New selector */
+	color: var(--t7) !important;
+}
+
+.pagination a:hover { /* New selector */
+	color: var(--tw) !important;
+}
+
+.pagination li a {
+	background-color: var(--bw) !important;
+	filter: none !important;
+	border-color: var(--b6) !important;
+	-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+			box-shadow: none !important;
+	color: var(--t6) !important;
+}
+
+.pagination li.ellipsis span {
+	background: transparent !important;
+	color:  var(--ct) !important;
+}
+
+.pagination li.active span {
+	background-color: var(--b7) !important;
+	border-color: var(--b6) !important;
+	color: var(--tw) !important;
+}
+
+.pagination li a:hover, .pagination li a:hover .icon, .pagination .dropdown-visible a.dropdown-trigger, .nojs .pagination .dropdown-container:hover a.dropdown-trigger {
+	background: var(--b6) !important;
+	border-color: var(--bb) !important;
+	filter: none !important;
+	color: var(--tw) !important;
+	text-shadow: none !important;
+}
+
+/* --- Search box --- */
+.search-box .inputbox,
+.search-box .inputbox:hover,
+.search-box .inputbox:focus {
+	border-color: var(--bb) !important;
+	background-color: var(--ffb1) !important;
+}
+
+.search-header {
+	box-shadow: 0 0 10px var(--bb) !important;
+		-webkit-box-shadow: 0 0 10px var(--bb) !important;
+			-moz-box-shadow: 0 0 10px var(--bb) !important;
+}
+
+.searchresults .icon.icon-black, /* New selector */
+a:hover .searchresults .icon.icon-black { /* New selector */
+	color: var(--t6) !important;
+}
+
+h2.searchresults-title { /* New selector */
+	color: var(--st1) !important;
+}
+
+ul.searchresults li a { /* New selector */
+	color: var(--t6) !important;
+}
+
+ul.searchresults li a:hover { /* New selector */
+	color: var(--tb) !important;
+}
+
+
+
+/* --- Icon images --- */
+.contact-icon						{ background-image: url("./images/icons_contact.png"); }
+
+/* Profile & navigation icons */
+.pm-icon							{ background-position: 0 0; }
+.email-icon							{ background-position: -21px 0; }
+.jabber-icon						{ background-position: -80px 0; }
+.phpbb_icq-icon						{ background-position: -61px 0 ; }
+.phpbb_wlm-icon						{ background-position: -182px 0; }
+.phpbb_aol-icon						{ background-position: -244px 0; }
+.phpbb_website-icon					{ background-position: -40px 0; }
+.phpbb_youtube-icon					{ background-position: -98px 0; }
+.phpbb_facebook-icon				{ background-position: -119px 0; }
+.phpbb_googleplus-icon				{ background-position: -140px 0; }
+.phpbb_skype-icon					{ background-position: -161px 0; }
+.phpbb_twitter-icon					{ background-position: -203px 0; }
+.phpbb_yahoo-icon					{ background-position: -224px 0; }
+
+/* Forum icons & Topic icons */
+.global_read						{ background-image: url("./images/announce_read.gif"); }
+.global_read_mine					{ background-image: url("./images/announce_read_mine.gif"); }
+.global_read_locked					{ background-image: url("./images/announce_read_locked.gif"); }
+.global_read_locked_mine			{ background-image: url("./images/announce_read_locked_mine.gif"); }
+.global_unread						{ background-image: url("./images/announce_unread.gif"); }
+.global_unread_mine					{ background-image: url("./images/announce_unread_mine.gif"); }
+.global_unread_locked				{ background-image: url("./images/announce_unread_locked.gif"); }
+.global_unread_locked_mine			{ background-image: url("./images/announce_unread_locked_mine.gif"); }
+
+.announce_read						{ background-image: url("./images/announce_read.gif"); }
+.announce_read_mine					{ background-image: url("./images/announce_read_mine.gif"); }
+.announce_read_locked				{ background-image: url("./images/announce_read_locked.gif"); }
+.announce_read_locked_mine			{ background-image: url("./images/announce_read_locked_mine.gif"); }
+.announce_unread					{ background-image: url("./images/announce_unread.gif"); }
+.announce_unread_mine				{ background-image: url("./images/announce_unread_mine.gif"); }
+.announce_unread_locked				{ background-image: url("./images/announce_unread_locked.gif"); }
+.announce_unread_locked_mine		{ background-image: url("./images/announce_unread_locked_mine.gif"); }
+
+.forum_link							{ background-image: url("./images/forum_link.gif"); }
+.forum_read							{ background-image: url("./images/forum_read.gif"); }
+.forum_read_locked					{ background-image: url("./images/forum_read_locked.gif"); }
+.forum_read_subforum				{ background-image: url("./images/forum_read_subforum.gif"); }
+.forum_unread						{ background-image: url("./images/forum_unread.gif"); }
+.forum_unread_locked				{ background-image: url("./images/forum_unread_locked.gif"); }
+.forum_unread_subforum				{ background-image: url("./images/forum_unread_subforum.gif"); }
+
+.sticky_read						{ background-image: url("./images/sticky_read.gif"); }
+.sticky_read_mine					{ background-image: url("./images/sticky_read_mine.gif"); }
+.sticky_read_locked					{ background-image: url("./images/sticky_read_locked.gif"); }
+.sticky_read_locked_mine			{ background-image: url("./images/sticky_read_locked_mine.gif"); }
+.sticky_unread						{ background-image: url("./images/sticky_unread.gif"); }
+.sticky_unread_mine					{ background-image: url("./images/sticky_unread_mine.gif"); }
+.sticky_unread_locked				{ background-image: url("./images/sticky_unread_locked.gif"); }
+.sticky_unread_locked_mine			{ background-image: url("./images/sticky_unread_locked_mine.gif"); }
+
+.topic_moved						{ background-image: url("./images/topic_moved.gif"); }
+.pm_read,
+.topic_read							{ background-image: url("./images/topic_read.gif"); }
+.topic_read_mine					{ background-image: url("./images/topic_read_mine.gif"); }
+.topic_read_hot						{ background-image: url("./images/topic_read_hot.gif"); }
+.topic_read_hot_mine				{ background-image: url("./images/topic_read_hot_mine.gif"); }
+.topic_read_locked					{ background-image: url("./images/topic_read_locked.gif"); }
+.topic_read_locked_mine				{ background-image: url("./images/topic_read_locked_mine.gif"); }
+.pm_unread,
+.topic_unread						{ background-image: url("./images/topic_unread.gif"); }
+.topic_unread_mine					{ background-image: url("./images/topic_unread_mine.gif"); }
+.topic_unread_hot					{ background-image: url("./images/topic_unread_hot.gif"); }
+.topic_unread_hot_mine				{ background-image: url("./images/topic_unread_hot_mine.gif"); }
+.topic_unread_locked				{ background-image: url("./images/topic_unread_locked.gif"); }
+.topic_unread_locked_mine			{ background-image: url("./images/topic_unread_locked_mine.gif"); }
+
+
+/* --- Colours and backgrounds for cp.css --- */
+
+/* --- Main CP box --- */
+
+h2.ucp-title {
+	color: var(--t4) !important;
+}
+
+.panel-container h3, .panel-container hr, .cp-menu hr {
+	border-color: transparent !important; /* Rule redundant. H3 borders set to 0px earlier */
+}
+
+.panel-container .panel li.row {
+	border-bottom-color: var(--b3) !important;
+	border-top-color: var(--b3) !important;
+}
+
+ul.cplist {
+	border-top-color: var(--b6) !important;
+}
+
+.panel-container .panel li.header dd, .panel-container .panel li.header dt {
+	color: var(--t6) !important;
+}
+
+.panel-container table.table1 thead th {
+	color: var(--bb) !important;
+	border-bottom-color: var(--b1) !important;
+}
+
+.cp-main .pm-message { /* Note: this selector may be redundant in active BB release */
+	border-color: transparent !important;
+	background-color: transparent !important;
+}
+
+.cp-main a { /* New selector */
+	/* color: var(--t6) !important; */
+}
+
+.cp-main a:hover { /* New selector */
+	color: var(--t1) !important;
+}
+
+/* --- CP tabbed menu ---*/
+.tabs .tab > a {
+	background: var(--b4) !important;
+	color: var(--t6) !important;
+}
+
+.tabs .tab > a:hover {
+	background: var(--t6) !important;
+	color: var(--tw) !important;
+}
+
+.tabs .activetab > a,
+.tabs .activetab > a:hover {
+	background-color: var(--b4) !important;
+	background-image: none !important;
+	filter: none !important;
+	border-color: var(--b4) !important;
+	-webkit-box-shadow: none !important;
+		-moz-box-shadow: none !important;
+			box-shadow: none !important;
+	color: var(--t1) !important;
+}
+
+.tabs .activetab > a:hover {
+	color: var(--t1) !important;
+}
+
+/* --- Mini tabbed menu used in MCP ---*/
+.minitabs .tab > a {
+	background-color: var(--b4) !important;
+}
+
+.minitabs .activetab > a,
+.minitabs .activetab > a:hover {
+	background-color: var(--b5) !important;
+	color: var(--h5) !important;
+}
+
+/* --- Responsive tabs ---*/
+.responsive-tab .responsive-tab-link:before {
+	border-color: var(--b2) !important;
+}
+
+.responsive-tab .responsive-tab-link:hover:before {
+	border-color: var(--h5) !important;
+}
+
+/* --- UCP navigation menu ---*/
+
+/* Link styles for the sub-section links */
+.navigation a {
+	color: var(--t6) !important;
+	background: var(--b8) !important; /* Old browsers */ /* FF3.6+ */
+	background: -webkit-linear-gradient(left, var(--b8), transparent) !important;
+	background: linear-gradient(to right, var(--b8) , transparent) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--b8)', endColorstr='transparent',GradientType=1 ) !important; /* IE6-9 */
+}
+
+.rtl .navigation a {
+	background: var(--b8) !important; /* Old browsers */ /* FF3.6+ */
+	background: -webkit-linear-gradient(left, transparent, var(--b8)) !important;
+	background: linear-gradient(to right, transparent, var(--b8)) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='transparent', endColorstr='var(--b8)',GradientType=1 ) !important; /* IE6-9 */
+}
+
+.navigation a:hover {
+	background: var(--b5) !important;
+	color: var(--t1) !important;
+	filter: progid:DXImageTransform.Microsoft.gradient(enabled = false) !important;
+}
+
+.navigation .active-subsection a {
+	color: var(--t1) !important;
+	background: var(--b8) !important;
+	background: -webkit-linear-gradient(left, var(--b8), var(--b5)) !important;
+	background: linear-gradient(to right, var(--b8) , var(--b5)) !important; /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='var(--b8)', endColorstr='var(--b5)',GradientType=1 ) !important; /* IE6-9 */
+	
+}
+
+.navigation .active-subsection a:hover {
+	color: var(--t1) !important;
+}
+
+@media only screen and (max-width: 900px), only screen and (max-device-width: 900px)
+{
+	#navigation a, .rtl #navigation a {
+		background: var(--b8) !important;
+	}
+}
+
+/* --- Preferences pane layout ---*/
+.panel-container h2 {
+	color: var(--ct) !important;
+}
+
+.panel-container .panel {
+	background-color: var(--b5) !important;
+}
+
+.cp-main .pm {
+	background-color: var(--bw) !important;
+}
+
+.cp-main .pmlist dd {
+	padding-top: 1px !important;
+}
+
+/* Friends list */
+.cp-mini {
+	background-color: var(--b3) !important;
+}
+
+dl.mini dt {
+	color: var(--bb) !important;
+}
+
+/* --- PM Styles ---*/
+
+/* PM Message history */
+.current {
+	color: var(--ct) !important;
+}
+
+/* PM marking colours */
+.pmlist li.pm_message_reported_colour, .pm_message_reported_colour {
+	border-left-color: var(--h1) !important;
+	border-right-color: var(--h1) !important;
+}
+
+.pmlist li.pm_marked_colour, .pm_marked_colour {
+	border-color: var(--h3) !important;
+}
+
+.pmlist li.pm_replied_colour, .pm_replied_colour {
+	border-color: var(--b6) !important;
+}
+
+.pmlist li.pm_friend_colour, .pm_friend_colour {
+	border-color: var(--b7) !important;
+}
+
+.pmlist li.pm_foe_colour, .pm_foe_colour {
+	border-color: var(--he)  !important;
+}
+
+/* --- Avatar gallery --- */
+.gallery label {
+	background: transparent !important;
+	border-color: transparent !important;
+}
+
+.gallery label:hover {
+	background-color: var(--bw) !important;
+	border-color: var(--b6) !important;
+}
+
+/* --- Colours and backgrounds for forms.css --- */
+
+/* General form styles */
+select {
+	border-color: var(--b6) !important;
+	background-color: var(--bw) !important;
+	color: var(--ct) !important;
+}
+
+label {
+	color: var(--tb) !important;
+}
+
+option.disabled-option {
+	color: graytext !important;
+}
+
+/* Definition list layout for forms */
+dd label {
+	color: var(--ct) !important;
+}
+
+fieldset.fields1 {
+	background-color: transparent !important;
+}
+
+/* Hover effects */
+fieldset dl:hover dt label {
+	color: var(--t6) !important;
+}
+
+fieldset.fields2 dl:hover dt label {
+	color: inherit !important;
+}
+
+/* Quick-login on index page */
+fieldset.quick-login input.inputbox {
+	background-color: var(--ffb1) !important;
+}
+
+/* Posting page styles */
+.message-box textarea {
+	color: var(--ff1) !important;
+}
+
+.message-box textarea.drag-n-drop {
+	outline-color: rgba(102, 102, 102, 0.5) !important;
+}
+
+.message-box textarea.drag-n-drop-highlight {
+	outline-color: rgba(17, 163, 234, 0.5) !important;
+}
+
+/* Input field styles */
+.inputbox {
+	background-color: var(--ffb1) !important;
+	border-color: var(--b6) !important;
+	color: var(--ff1) !important;
+}
+
+.inputbox:-moz-placeholder {
+	color: color: var(--ff1) !important;
+}
+
+.inputbox::-webkit-input-placeholder {
+	color: color: var(--ff1) !important;
+}
+
+.inputbox:hover {
+	border-color: var(--bb) !important;
+}
+
+.inputbox:focus {
+	border-color: var(--bb) !important;
+}
+
+.inputbox:focus:-moz-placeholder {
+	color: transparent !important;
+}
+
+.inputbox:focus::-webkit-input-placeholder {
+	color: transparent !important;
+}
+
+
+/* --- Form button styles --- */
+a.button1, input.button1, input.button3, a.button2, input.button2 {
+	color: var(--tb) !important;
+	background-color: var(--b8) !important;
+	background-image: none !important;
+	border-color: var(--b1) !important;}
+
+/* Hover states */
+a.button1:hover, input.button1:hover, a.button2:hover, input.button2:hover, input.button3:hover {
+	color: var(--tw) !important;
+	background-color: var(--b6) !important;
+	background-image: none !important;
+	border-color: var(--b1) !important;
+}
+
+/* Focus states */
+input.button1:focus, input.button2:focus, input.button3:focus {
+	border-color: var(--b1) !important;
+	color: var(--tw) !important;
+}
+
+input.disabled {
+	color: var(--t2) !important;
+}
+
+/* --- jQuery popups --- */
+.phpbb_alert {
+	background-color: var(--b1) !important;
+	border-color: var(--b8) !important;
+	color: var(--t8) !important;
+	-webkit-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	   -moz-box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+	        box-shadow: 0 5px 15px rgba(0,0,0,0.3) !important;
+}
+
+.phpbb_alert h3 { /* New selector */
+	color: var(--t5) !important;
+}
+
+.darken {
+	background-color: var(--bb) !important;
+}
+
+.loading_indicator {
+	background-color: var(--bb) !important;
+	background-image: url("./images/loading.gif");
+}
+
+.dropdown-extended ul li {
+	border-top-color: var(--b3) !important;
+}
+
+.dropdown-extended ul li:hover {
+	background-color: var(--b2) !important;
+	color: var(--t5) !important;
+}
+
+.dropdown-extended .header, .dropdown-extended .footer {
+	border-color: var(--b3) !important;
+	color: var(--t5) !important;
+    background-color: var(--bb) !important;
+}
+
+.dropdown-extended .header {
+	background-image: none !important;
+	filter: none !important;
+}
+
+.dropdown-extended .footer {
+	border-top-style: solid !important;
+	border-top-width: 1px !important;
+}
+
+.dropdown-extended .footer:hover { /* New selector */
+	background-color: var(--b2) !important;
+}
+
+.dropdown .pointer {
+	border-color: var(--b3) transparent !important;
+}
+
+.dropdown .pointer-inner {
+	border-color: var(--b3) transparent !important;
+}
+
+.dropdown-extended .pointer-inner {
+	border-color: var(--b3) transparent !important;
+}
+
+.dropdown .dropdown-contents {
+	border: 5px solid var(--cb) !important;
+	background: var(--cbg1) !important;
+	-webkit-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2) !important;
+	   -moz-box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2) !important;
+	        box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dropdown-contents li:hover {
+	background-color: var(--b2) !important;
+}
+
+.dropdown .dropdown-contents a { /* New selector */
+	color: var(--dl1) !important;
+}
+
+.dropdown .dropdown-contents a:hover { /* New selector */
+	color: var(--dl1-h) !important;
+}
+
+.dropdown-up .dropdown-contents {
+	-webkit-box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2) !important;
+	   -moz-box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2) !important;
+	        box-shadow: 1px 0 5px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dropdown li, .dropdown li li {
+	border-color: var(--b3) !important;
+}
+
+.dropdown li.separator {
+	border-color: var(--b3) !important;
+}
+
+.dropdown fieldset.display-options label { /* New selector */
+	color: var(--t5) !important;
+}
+
+/* --- Notifications --- */
+.notification_list p.notification-time {
+	color: var(--t5) !important;
+}
+
+.notification_list p.notification-title, /* New selector */
+.notification_list p.notification-reference { /* New selector */
+	color: var(--t8) !important;
+}
+
+.notification_list li.bg2 .notification-title, /* New selector */
+.notification_list li.bg2 .notification-reference { /* New selector */
+	color: var(--tw) !important;
+}
+
+.notification_list li.bg2 {
+	background-color: var(--b6) !important;
+}
+
+li.notification-reported strong, li.notification-disapproved strong {
+	color: var(--tb) !important;
+}
+
+.badge {
+	background-color: var(--b6) !important;
+	color: var(--tw) !important;
+}
+
+/* ----------------- Colours.css : End. ----------------- */
